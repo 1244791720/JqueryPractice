@@ -2,22 +2,30 @@ $(function() {
     'use strict'
 
     /*选中页面中所有的input[data-rule]*/
+    var $inputs = $('[data-rule]')
+    var $form = $('#signup')
+    var inputs = []
 
-    /*解析每一个input的验证规则*/
-
-    /*验证*/
-    var Validator = new MyValidator('s.....', {
-        maxlength: 5,
-        minlength: 3,
-        pattern: '^[a-zA-Z0-9]+$',
+    $inputs.each(function (index, node) {
+        /*解析每一个input的验证规则*/
+        var temp = new input(node)
+        inputs.push(temp)
     })
 
-    // var result =  Validator.ValidateMax()
-    // var result =  Validator.ValidateMin()
-    // var result =  Validator.ValidateMaxlength()
-    // var result =  Validator.validateNumeric()
-    // var result =  Validator.validateRequired()
-    var result =  Validator.validatePattern()
-    console.log('result', result)
+    $form.on('submit', function(e) {
+        e.preventDefault();
+        $inputs.trigger('keyup')
+        for (var i = 0; i < inputs.length; i++) {
+            var item = inputs[i]
+            var r = item.validator.isValid()
+            if (!r) {
+                alert('注册失败')
+                return
+            } else {
+                alert('注册成功')
+            }
+        }
+    })
+
 
 })

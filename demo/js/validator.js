@@ -2,28 +2,55 @@ $(function(){
     'use strict'
 
     window.MyValidator = function(val, rule) {
-        // this.isValid = function() {
-        //
-        // }
 
-        this.ValidateMax = function() {
+        this.isValid = function(newVal) {
+            var key
+            if (newVal !== undefined) {
+                val = newVal || val
+            }
+            if (!rule.Required) {
+                return true
+            }
+
+            for (key in rule) {
+                /*防止重复检查*/
+                if (key === 'Required') {
+                    continue
+                }
+
+                /*调用rule中对应的方法*/
+                // console.log('validate' + key)
+                 var r = this['validate' + key]()
+                    if (!r) {
+                        return false
+                    }
+            }
+
+            return true
+        }
+
+        this.validateMax = function() {
             preMaxMin()
-            return val <= rule.max
+            return val <= rule.Max
         }
 
-        this.ValidateMin = function() {
+        this.validateMin = function() {
             preMaxMin()
-            return val >= rule.min
+            return val >= rule.Min
         }
 
-        this.ValidateMaxlength = function() {
+        this.validateMaxlength = function() {
              preLength()
-            return val.length <= rule.maxlength
+             console.log('rule.Maxlength', rule.Maxlength)
+             console.log('val.length', val.length)
+             console.log('val.length <= rule.Maxlength', val.length <= rule.Maxlength)
+
+            return val.length <= rule.Maxlength
         }
 
-        this.ValidateMinlength = function() {
+        this.validateMinlength = function() {
              preLength()
-            return val.length >= rule.minlength
+            return val.length >= rule.Minlength
         }
 
         this.validateNumeric = function() {
@@ -50,7 +77,8 @@ $(function(){
 
         /*用于this.ValidateMaxlength this.ValidateMinlength 前置工作*/
         function preLength() {
-            val = parseFloat(val)
+             val = val.toString()
+            console.log('parseFloat(val)',parseFloat(val))
         }
     }
 })

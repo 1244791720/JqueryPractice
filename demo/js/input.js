@@ -3,11 +3,47 @@ $(function(){
 
     window.input = function(selector) {
         var $ele
-        var rule = {}
+        var $errorEle
+        var me = this
+        var rule = {
+            Required : true
+        }
 
+        this.loadValidator = function() {
+            var val = this.getVal()
+            this.validator = new MyValidator(val, rule)
+
+        }
+
+        this.getVal = function() {
+            return $ele.val()
+        }
         function init() {
             findEle()
+            getErrorEle()
             parseRule()
+            me.loadValidator()
+            listen()
+        }
+
+        function listen() {
+            $ele.on('keyup', function() {
+                var r = me.validator.isValid(me.getVal())
+                if (!r) {
+                    $errorEle.show()
+                } else {
+                    $errorEle.hide()
+                }
+                console.log(r)
+            })
+        }
+
+        function getErrorEle() {
+            $errorEle = $(getErrorId())
+        }
+
+        function getErrorId() {
+            return '#' + $ele.attr('name') + '-input-error'
         }
 
         function findEle() {

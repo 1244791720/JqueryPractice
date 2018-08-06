@@ -11,21 +11,58 @@
 <body>
 <div class="wrap wrap-sm">
     <div class="header">
-        <h1>Yo....</h1>
+        <h1>注册</h1>
     </div>
     <div class="form">
-        <form action="">
+        <form id="signup" action="">
             <div class="input-wrap">
                 <label>姓名</label>
-                <input data-rule='pattern:"^[a-z0-9]$"|min:18|maxlength:10|minlength:2|required:false|numeric:false' type="text" class="input-control">
-                <div class="input-error">姓名格式有误</div>
+                <input data-rule='Maxlength:5|Minlength:1'
+                       type="text"
+                       name="name"
+                       class="input-control">
+                <div id="name-input-error" class="input-error">姓名格式有误，最大长度为5,最小长度为1</div>
             </div>
+            <div class="input-wrap">
+                <label>用户名</label>
+                <input data-rule='Pattern:"^[a-z0-9]*$"|Maxlength:18|Minlength:4'
+                       type="text"
+                       name="username"
+                       class="input-control">
+                <div id="username-input-error" class="input-error">用户名格式有误，请输入4-8个字符</div>
+            </div>
+            <div class="input-wrap">
+                <label>年龄</label>
+                <input data-rule='Min:18'
+                       type="text"
+                       name="age"
+                       class="input-control">
+                <div id="age-input-error" class="input-error">年龄格式有误，最小年龄为18岁</div>
+            </div>
+            <div class="input-wrap">
+                <label>密码</label>
+                <input data-rule='Maxlength:64|Minlength:6'
+                       type="password"
+                       name="password"
+                       class="input-control">
+                <div id="password-input-error" class="input-error">密码格式有误，请输入6-64个字符</div>
+            </div>
+            <div class="input-wrap">
+                <label>介绍</label>
+                <input data-rule='Required:false|Maxlength:1024'
+                       type="text"
+                       name="intro"
+                       class="input-control">
+                <div id="intro-input-error" class="input-error">介绍格式有误</div>
+            </div>
+            <button class="button-control" type="submit">注册</button>
         </form>
     </div>
 
 </div>
 <script src="js/jquery.min.js"type="text/javascript"></script>
 <script src="js/validator.js"type="text/javascript"></script>
+<script src="js/input.js"type="text/javascript"></script>
 <script src="js/main.js" type="text/javascript"></script>
 </body>
 </html>
